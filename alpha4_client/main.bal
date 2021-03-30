@@ -42,5 +42,15 @@ public function main() {
     //
     string getPet  =  openapiClient->getPet();
     io:println(getPet);
+    User user = {
+        id: 1,
+        name: "Marks"
+    };
+
+    http:Response userOut = openapiClient->createUser(user);
+    io:println(userOut);
+
+    record {| *http:NotFound; string body; |} errorCode =  openapiClient->resource1();
+    io:println(errorCode);
     
 }

@@ -79,4 +79,52 @@ public client class openapiClient {
         
         return response;
     }
+//payload can be string, json, xml, byte[], record, and record[]
+//Error with record ERROR [openapi_client.bal:(87:28,87:42)] incompatible types: expected '(string|xml|json|byte[]|ballerina/mime:1.1.0-alpha6:Entity[]|stream<byte[],ballerina/io:0.6.0-alpha6:Error?>)'
+    remote function createUser(User createUserBody) returns http:Response {
+        http:Client createUserEp = self.clientEp;
+        http:Request request = new;
+        json createUserJsonBody = checkpanic createUserBody.cloneWithType(json);
+        request.setPayload(createUserJsonBody);
+        // TODO: Update the request as needed
+        var response = checkpanic createUserEp->post("/user", request);
+        
+        return response;
+    }
+    
+    // remote function createImage(blob createImageBody) returns http:Response | error {
+    //     http:Client createImageEp = self.clientEp;
+    //     http:Request request = new;
+        
+
+    //     // TODO: Update the request as needed
+    //     var response = check createImageEp->post("/image", request);
+
+    //     if (response is http:Response) {
+    //         return response;
+    //     }
+    //     return <error>response;
+    // }
+    
+    // remote function createMultipart('mime:Entity[] createMultipartBody) returns http:Response | error {
+    //     http:Client createMultipartEp = self.clientEp;
+    //     http:Request request = new;
+        
+
+    //     // TODO: Update the request as needed
+    //     var response = check createMultipartEp->post("/imagemulti", request);
+
+    //     if (response is http:Response) {
+    //         return response;
+    //     }
+    //     return <error>response;
+    // }
+    
+    //scenarion with error code 404
+    remote function resource1() returns record {| *http:NotFound; string body; |} {
+        http:Client resource1Ep = self.clientEp
+        // TODO: Update the request as needed
+        var response = checkpanic resource1Ep->get("/ping", targetType = record {| *http:NotFound; string body; |});
+        return response;
+    }
 }

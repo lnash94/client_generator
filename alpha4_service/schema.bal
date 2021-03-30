@@ -12,3 +12,8 @@ public type  Error record  {
     int  code;
     string  message;
 };
+
+public type User record {
+    int id;
+    string name?;
+};
